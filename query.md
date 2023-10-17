@@ -25,11 +25,11 @@ laurea (286)
 
 2. SELECT * FROM `courses` WHERE `cfu` > 10;
 
-3. SELECT * FROM `students` WHERE (YEAR(NOW()) - YEAR(`date_of_birth`) > '30';
+3. SELECT * FROM `students` WHERE TIMESTAMPDIFF(YEAR, `date_of_birth`, CURDATE()) > 30;
 
 4. SELECT * FROM `courses` WHERE `period` = 'I semestre' AND `year` = 1;
 
-5. SELECT * FROM `exams` WHERE TIME(`hour`) > '14:00' AND `date` LIKE '2020-06-20';
+5. SELECT * FROM `exams` WHERE TIME(`hour`) >= '14:00' AND `date` LIKE '2020-06-20';
 
 6. SELECT * FROM `degrees` WHERE `level` = 'magistrale';
 
