@@ -23,4 +23,23 @@ BONUS: Selezionare per ogni studente il numero di tentativi sostenuti per ogni e
 
 ## Group by:
 
+1. SELECT YEAR(`students`.`enrolment_date`), COUNT(*)
+    FROM `students`
+    GROUP BY YEAR(`students`.`enrolment_date`);
+
+2. SELECT `teachers`.`office_address`, COUNT(*)
+    FROM `teachers`
+    GROUP BY `teachers`.`office_address`;
+
+3. SELECT `exam_id`, AVG(`vote`)
+    FROM `exam_student`
+    GROUP BY `exam_id`; 
+
+4. SELECT `degrees`.`department_id`, COUNT(*)
+    FROM `degrees`
+    GROUP BY `department_id`;
+
+
+## Joins:
+
 1. 
