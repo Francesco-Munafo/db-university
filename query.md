@@ -35,4 +35,4 @@ laurea (286)
 
 7. SELECT COUNT(*) AS 'total_departments' FROM `departments`;
 
-8. SELECT * FROM `teachers` WHERE `phone` IS NULL;
+8. SELECT COUNT(*) AS 'no_phone_teacher' FROM `teachers` WHERE `phone` IS NULL;
