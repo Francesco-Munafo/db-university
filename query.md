@@ -18,6 +18,22 @@ laurea (286)
 8. Quanti sono gli insegnanti che non hanno un numero di telefono? (50)
 
 
+/* LIVE CODING 18/10/2023 */
+
+
+9. Selezionare tutti i corsi del Corso di Laurea in Informatica (22)
+
+10. Selezionare le informazioni sul corso con id = 144, con tutti i relativi appelli d’esame
+
+11. Selezionare a quale dipartimento appartiene il Corso di Laurea in Diritto
+dell'Economia (Dipartimento di Scienze politiche, giuridiche e studi internazionali)
+
+12. Selezionare tutti gli appelli d'esame del Corso di Laurea Magistrale in Fisica del
+primo anno
+
+13. Selezionare tutti i docenti che insegnano nel Corso di Laurea in Lettere (21)
+
+14. Selezionare il libretto universitario di Mirco Messina (matricola n. 620320)
 
 
 
@@ -36,3 +52,46 @@ laurea (286)
 7. SELECT COUNT(*) AS 'total_departments' FROM `departments`;
 
 8. SELECT COUNT(*) AS 'no_phone_teacher' FROM `teachers` WHERE `phone` IS NULL;
+
+
+
+/* LIVE CODING 18/10/2023 */
+
+
+
+9. SELECT `courses`.`id`, `courses`.`name`, `courses`.`period`, `courses`.`year`, `courses`.`cfu`, `courses`.`website`, `degrees`.`name` AS `degree_name`
+    FROM `courses`
+    JOIN `degrees` ON `courses`.`degree_id` = `degrees`.`id`
+    WHERE `degrees`.`name` = 'Corso di Laurea in Informatica';
+
+
+10. SELECT `courses`.`id` AS `course_id`, `courses`.`name`, `courses`.`description`, `courses`.`period`, `courses`.`cfu`, `courses`.`year`, `courses`.`website`, `exams`.`id` AS `exam_id`, `exams`.`date`, `exams`.`hour`, `exams`.`location`, `exams`.`address`
+FROM `courses`
+JOIN `exams` ON `courses`.`id` = `exams`.`course_id`
+WHERE `courses`.`id` = 144;
+
+11. SELECT `departments`.*
+FROM `departments`
+JOIN `degrees` ON `departments`.`id` = `degrees`.`department_id`
+WHERE`degrees`.`name` = 'Corso di Laurea in Diritto dell\'Economia';
+
+12. SELECT `courses`.`name`, `courses`.`period`, `courses`.`cfu`, `exams`.`date`, `exams`.`hour`, `exams`.`location`, `exams`.`address` 
+FROM `degrees` 
+JOIN `courses` ON `courses`.`degree_id` = `degrees`.`id` 
+JOIN `exams` ON `exams`.`course_id` = `courses`.`id`
+WHERE `courses`.`year` = 1 AND `degrees`.`name` = 'Corso di Laurea Magistrale in Fisica';
+
+13. SELECT DISTINCT `teachers`.*
+FROM `teachers`     
+JOIN `course_teacher` ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses` ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `degrees` ON `courses`.`degree_id` = `degrees`.`id`
+WHERE `degrees`.`name` = 'Corso di Laurea in Lettere'
+ORDER BY `teachers`.`surname` ASC;
+
+14. SELECT `students`.`name`, `students`.`surname`, `students`.`registration_number`, `courses`.`id`, `courses`.`name`, `courses`.`date`, `exams_student`.`vote`
+FROM `exam_student`
+JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id`
+JOIN `students` ON `exam_student`.`student_id` = `students`.`id`
+JOIN `courses` ON `exams`.`course_id` = `courses`.`id`
+WHERE `students`.`name` = 'Mirco Messina' AND `exams_student`.`vote` >= 18
